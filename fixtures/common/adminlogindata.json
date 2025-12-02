@@ -1,4 +1,14 @@
 {
-  "username": "support@coalitionmanager.org",
-  "password": "2021c0a1itionGoals!"
+  "validUser": {
+    "username": "support@coalitionmanager.org",
+    "password": "2021c0a1itionGoals!"
+  },
+  "invalidUser": {
+    "username": "wrong@example.com",
+    "password": "wrongpass"
+  },
+  "invalidEmailUsername": {
+    "username": "wrong",
+    "password": "wrongp"
+  }
 }
