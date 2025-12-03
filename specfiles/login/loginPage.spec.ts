@@ -2,6 +2,8 @@ import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../pages/login/loginPage";
 import credentials from "../../fixtures/common/adminlogindata.json";
 
+test.use({ storageState: undefined });
+
 test.describe("Login Page : Coalition Manager", () => {
   test.beforeEach(async ({ page }, testInfo) => {
     const login = new LoginPage(page);
@@ -43,7 +45,7 @@ test.describe("Login Page : Coalition Manager", () => {
 
   test("Verify password show/hide icon works correctly", async ({ page }) => {
     const login = new LoginPage(page);
-    await login.passwordField.fill('TestPassword123');
+    await login.passwordField.fill("TestPassword123");
     await login.togglePasswordHideIcon();
 
     await login.clickTogglePassword();
@@ -84,5 +86,11 @@ test.describe("Login Page : Coalition Manager", () => {
     const user = credentials.validUser;
     await login.login(user.username, user.password);
   });
-  
+
+  test("Validate browser tab title after login", async ({ page }) => {
+    const login = new LoginPage(page);
+    const user = credentials.validUser;
+    await login.login(user.username, user.password);
+    await login.validateTabTitle("Home Page - Coalition Manager");
+  });
 });

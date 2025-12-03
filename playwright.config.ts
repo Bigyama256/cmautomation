@@ -12,6 +12,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  globalSetup: require.resolve('./global-setup'),
   testDir: './specfiles',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -26,6 +27,8 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
+    // storageState: 'storage/admin.json',
+    // baseURL: 'https://staging2.coalitionmanager.org/staging-combined',
     baseURL: 'https://staging2.coalitionmanager.org/staging-combined/Account/Login',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */

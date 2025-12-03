@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator , expect } from "@playwright/test";
 
 export class BasePage {
   readonly page: Page;
@@ -8,7 +8,7 @@ export class BasePage {
   }
 
   async navigate(url: string) {
-    await this.page.goto(url, { waitUntil: 'domcontentloaded' });
+    await this.page.goto(url, { waitUntil: "domcontentloaded" });
   }
 
   async click(locator: Locator) {
@@ -17,5 +17,9 @@ export class BasePage {
 
   async type(locator: Locator, text: string) {
     await locator.fill(text);
+  }
+
+  async validateTabTitle(expectedTitle: string) {
+    await expect(this.page).toHaveTitle(expectedTitle);
   }
 }

@@ -1,0 +1,95 @@
+{
+  "cookies": [
+    {
+      "name": "__RequestVerificationToken_L3N0YWdpbmctY29tYmluZWQ1",
+      "value": "ZnA6nClg1KGU2AzKfs21I6mBJjNPYcog0W8B6ouT_PSss48WPs151S8qBQJ3syNWW5UkUzJ5SSThtnRxYpiGpuzyXA1xGIdknsaWppR5ctc1",
+      "domain": "staging2.coalitionmanager.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_cfuvid",
+      "value": "M0Dur6vWP_R03P.VUPTCjAhKRDlH.ffaQJXe3lVUTSQ-1764767534891-0.0.1.1-604800000",
+      "domain": ".challenges.cloudflare.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "currentSecondValue",
+      "value": "",
+      "domain": "staging2.coalitionmanager.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "currentRegistrationId",
+      "value": "",
+      "domain": "staging2.coalitionmanager.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "currentLessonId",
+      "value": "",
+      "domain": "staging2.coalitionmanager.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "resetLessonTimer",
+      "value": "",
+      "domain": "staging2.coalitionmanager.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "currentLaunchId",
+      "value": "",
+      "domain": "staging2.coalitionmanager.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": ".AspNet.ApplicationCookie",
+      "value": "Q9QcoHwpx1HHR3od__PfOVzFhwgOsmSHBTUL61CZqz5HA7f2eT58YiA2q5h5ufqvLe0eKooscotq_WP9__ow0wudmcdGXNnSooHsJ-7BYPEDAf1nvjYB1NF4B_GHtGoanmn9l-U3erRIKedQRIJFiZcuWNLKq-n-PUQCbMCoZv5cT4vtZHDe6pYAePlV32CFVYa4yAPKEZX61creeokCw5wUqn0V1bJM9CnZR2TLnRVHIGXYKAkXQ4ldb51gkaFBIGzoWTRBcbAlEurTy-S2waZ0xrS6b10AMyXQBZNoIkJQ2FLmJAXIrXQUeeYpDOMMph9z5N1PepwuNpCoC0I9cg7gtnSeYwEK4Qd8-TSNuMHVqqKQVLO0PYCtZA8wVa1gn4nupQUCTxx3HSjQEGec_9Cr0XDWK_k30ANH36giIbDw9HWE9KDuWj9OhArrapB0U0f4-wTkeIiMb-QDp1hJp1LJcXbuxkUYgi38JxYEHjtNs683-7z5k2kE_LRMNQthH0PqE9ucXE9Od9ga0g1DW-3wdBKk0KEAqYWqGzXpFi257NdYGW4YN8ehFly5WIbscRI5SQMi7GstbcKlhQ11EIzzuY-b8zGvVt2Tf-ITYk4PrDVeM7wYNIki67o-ko8AJNx7Ry3wQkLpf4eHxvBWHxUscovnmpU8SqHxzhrpc-jaJLtAOMqI5dlJXOkrHYy_R20eOMH6ZDdFw_pakrSNRo5-Fj9oR4sEiiH9Kw4MuWO4Q39q_2iJ6a19ImtcjDut",
+      "domain": "staging2.coalitionmanager.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ASP.NET_SessionId",
+      "value": "5eaplbjbm1xc5orle41fze2q",
+      "domain": "staging2.coalitionmanager.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

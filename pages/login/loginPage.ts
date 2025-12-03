@@ -14,6 +14,8 @@ export class LoginPage extends BasePage {
   readonly passwordError: Locator;
   readonly clickHereLink: Locator;
   readonly togglePasswordIcon: Locator;
+  readonly dashboardNav: Locator;
+  readonly dashboardNavText: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -36,6 +38,8 @@ export class LoginPage extends BasePage {
     this.passwordError = page.locator('span[data-valmsg-for="Password"]');
     this.clickHereLink = page.getByRole("link", { name: "Click here" });
     this.togglePasswordIcon = page.locator(".toggle-password").first();
+    this.dashboardNav = page.getByRole("link", { name: "Dashboard" });
+    this.dashboardNavText = page.locator("#dashboardNav");
   }
 
   async login(email: string, password: string) {
@@ -100,8 +104,9 @@ export class LoginPage extends BasePage {
     await expect(this.togglePasswordIcon).toHaveClass(/fa-eye-slash/);
   }
 
-   async clickTogglePassword() {
+  async clickTogglePassword() {
     await expect(this.togglePasswordIcon).toBeVisible();
     await this.togglePasswordIcon.click();
   }
+
 }
