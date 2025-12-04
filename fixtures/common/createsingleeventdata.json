@@ -1,0 +1,21 @@
+{
+  "defaultEvent": {
+    "eventTitle": "Event with registration information",
+    "hours": "2.00",
+    "executiveSummary": "Executive summary of event",
+    "description": "Description for the event that is visible to everyone.",
+    "notes": "Internal notes about the event.",
+    "brochureUrl": "https://example.com/event-brochure",
+    "fileLocation": "shared-drive/folder/file.pdf",
+    "tag": "tag-automation",
+    "accommodationsNotificationEmail": "test@mail.com",
+    "eventRegistrationNotificationEmail": "test1@mail.com",
+    "eventRegistrationCancellationNotificationEmail": "test2@mail.com",
+    "surveyNotificationEmail": "test3@mail.com",
+    "eventWaitlistEmail": "test4@mail.com",
+    "surveyLinkFromCustomForms": "https://forms.example.com/survey-123",
+    "venue": "Main meeting hall",
+    "startDate": "12/3/2025 9:00 AM",
+    "endDate": "12/30/2025 9:00 AM"
+  }
+}

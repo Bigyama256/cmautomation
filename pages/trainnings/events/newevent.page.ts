@@ -8,8 +8,8 @@ export class NewEventPage extends BasePage {
   readonly newTrainingEvent: Locator;
   readonly typeOfEventHeading: Locator;
   readonly helpIcon: Locator;
-  readonly descriptionText: Locator;
   readonly singleEventLink: Locator;
+  readonly typeOfEventDescription: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -20,8 +20,9 @@ export class NewEventPage extends BasePage {
       name: "Type of Event",
     });
     this.helpIcon = page.locator(".bi.bi-question-circle");
-    this.descriptionText = page.getByText("Do you want to create a");
     this.singleEventLink = page.getByRole("link", { name: "Single Event" });
+    this.typeOfEventDescription = page.getByText('Do you want to create a Single Event or a Series of Events?');
+
   }
 
   async openNewEventFromSidebar() {
@@ -32,8 +33,9 @@ export class NewEventPage extends BasePage {
   async verifyTypeOfEventPage() {
     await expect(this.typeOfEventHeading).toBeVisible();
     await expect(this.helpIcon).toBeVisible();
-    await expect(this.descriptionText).toBeVisible();
     await expect(this.singleEventLink).toBeVisible();
+    await expect(this.typeOfEventDescription).toBeVisible();
+
 
   }
 

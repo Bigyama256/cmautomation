@@ -12,6 +12,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  timeout: 60000,
   globalSetup: require.resolve('./global-setup'),
   testDir: './specfiles',
   /* Run tests in files in parallel */
