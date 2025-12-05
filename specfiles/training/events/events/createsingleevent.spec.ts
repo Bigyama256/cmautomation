@@ -23,7 +23,7 @@ test.describe("Create Single Event - Training/Events - Full End-to-End Flow", ()
     await newEventPage.clickSingleEvent();
   });
 
-  test.only("Verify Training/Events heading, all tabs and Save button are visible", async ({
+  test("Verify Training/Events heading, all tabs and Save button are visible", async ({
     page,
   }) => {
     const createEventPage = new CreateSingleEventPage(page);
@@ -33,7 +33,7 @@ test.describe("Create Single Event - Training/Events - Full End-to-End Flow", ()
     await expect(createEventPage.saveButton).toBeVisible();
   });
 
-  test.only("Complete Single Event Creation Flow", async ({ page }) => {
+  test("Complete Single Event Creation Flow", async ({ page }) => {
     const createEventPage = new CreateSingleEventPage(page);
 
     const data: SingleEventData = (singleEventData as any).defaultEvent;
@@ -43,6 +43,7 @@ test.describe("Create Single Event - Training/Events - Full End-to-End Flow", ()
     await createEventPage.fillEventDetails(data);
     await createEventPage.verifyPromoImage();
     await createEventPage.configureAccessAndContentAreas();
+    await createEventPage.fillAttendeeCapacity(data);
     await createEventPage.clickSave();
 
   });

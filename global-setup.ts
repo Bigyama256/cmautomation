@@ -6,6 +6,9 @@ async function globalSetup(config: FullConfig) {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
+  page.setDefaultTimeout(60000);
+  page.setDefaultNavigationTimeout(60000);
+
   const login = new LoginPage(page);
 
   // baseURL from playwright.config.ts

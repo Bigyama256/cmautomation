@@ -20,6 +20,7 @@ export type SingleEventData = {
   venue: string;
   startDate: string;
   endDate: string;
+  attendeeCapacity: string;
 };
 
 export class CreateSingleEventPage extends BasePage {
@@ -55,6 +56,10 @@ export class CreateSingleEventPage extends BasePage {
   readonly surveyNotificationEmailInput: Locator;
   readonly waitlistNotificationEmailInput: Locator;
   readonly surveyLinkFromCustomFormsInput: Locator;
+
+  // registration & trainers tab
+  readonly attendeeCapacityInput: Locator;
+  readonly registrationInformationTab: Locator;
 
   // ---------- Event Details ----------
   readonly venueInput: Locator;
@@ -98,7 +103,6 @@ export class CreateSingleEventPage extends BasePage {
       .locator("a")
       .filter({ hasText: "Basic Information" });
     this.promoImageTab = page.locator("a").filter({ hasText: "Promo Image" });
-    this.trainersTab = page.locator("a").filter({ hasText: "Trainers" });
     this.trainingAccessTab = page
       .locator("a")
       .filter({ hasText: "Training Access" });
@@ -141,6 +145,15 @@ export class CreateSingleEventPage extends BasePage {
     );
 
     this.surveyLinkFromCustomFormsInput = page.locator("#SurveyLink");
+    // trainers & registration tab
+    this.attendeeCapacityInput = page.getByRole("spinbutton", {
+      name: "Attendee Capacity",
+    });
+    this.registrationInformationTab = page
+      .locator("a")
+      .filter({ hasText: "Registration Information" })
+      .first();
+    this.trainersTab = page.locator("a").filter({ hasText: "Trainers" });
 
     // Event Details
     this.venueInput = page.locator("#EventAddress");
@@ -246,10 +259,10 @@ export class CreateSingleEventPage extends BasePage {
   // ---------- Fill Basic Information ----------
 
   async fillBasicInformation(data: SingleEventData) {
-    // Use common function to generate unique title
+    //  unique event title
     const uniqueTitle = CommonFunctions.appendRandomNumber(data.eventTitle, 3);
 
-    this.generatedEventTitle = uniqueTitle; // optional: keep it for later assertions
+    this.generatedEventTitle = uniqueTitle; // for later assertions
 
     await this.eventTitleInput.fill(uniqueTitle);
     await this.hoursInput.fill(data.hours);
@@ -284,6 +297,15 @@ export class CreateSingleEventPage extends BasePage {
     await this.surveyLinkFromCustomFormsInput.fill(
       data.surveyLinkFromCustomForms
     );
+  }
+  // registration & trainers tab
+  async fillAttendeeCapacity(data: SingleEventData) {
+    await expect(this.registrationInformationTab).toBeVisible();
+    await expect(this.attendeeCapacityInput).toBeVisible();
+    await this.attendeeCapacityInput.click();
+    await this.attendeeCapacityInput.fill(data.attendeeCapacity);
+    await this.registrationInformationTab.click();
+    await this.trainersTab.click();
   }
 
   // ---------- Event Details (dates / venue) ----------

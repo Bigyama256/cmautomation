@@ -42,10 +42,23 @@ export class LoginPage extends BasePage {
     this.dashboardNavText = page.locator("#dashboardNav");
   }
 
-  async login(email: string, password: string) {
+  async login(email: string, password: string, expectSuccess: boolean = true) {
     await this.type(this.emailField, email);
     await this.type(this.passwordField, password);
-    await this.click(this.loginButton);
+
+    // Click login without auto navigation waiting
+    await this.loginButton.click({ noWaitAfter: true });
+
+    if (expectSuccess) {
+      // Wait only when we expect successful login
+      await this.dashboardNavText.waitFor({
+        state: "visible",
+        timeout: 60000,
+      });
+
+      //  assert to be sure of login success
+      await expect(this.dashboardNavText).toContainText("Dashboard");
+    }
   }
 
   async clearAndClickLogin() {
@@ -108,5 +121,4 @@ export class LoginPage extends BasePage {
     await expect(this.togglePasswordIcon).toBeVisible();
     await this.togglePasswordIcon.click();
   }
-
 }

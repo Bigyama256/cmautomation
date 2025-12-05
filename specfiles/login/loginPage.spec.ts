@@ -30,7 +30,7 @@ test.describe("Login Page : Coalition Manager", () => {
   }) => {
     const login = new LoginPage(page);
     const user = credentials.invalidUser;
-    await login.login(user.username, user.password);
+    await login.login(user.username, user.password,false);
     await expect(page.getByText("Invalid login attempt")).toBeVisible();
   });
 
@@ -39,7 +39,7 @@ test.describe("Login Page : Coalition Manager", () => {
   }) => {
     const login = new LoginPage(page);
     const user = credentials.invalidEmailUsername;
-    await login.login(user.username, user.password);
+    await login.login(user.username, user.password,false);
     await login.validateInvalidEmailError();
   });
 

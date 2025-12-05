@@ -16,6 +16,7 @@
     "surveyLinkFromCustomForms": "https://forms.example.com/survey-123",
     "venue": "Main meeting hall",
     "startDate": "12/3/2025 9:00 AM",
-    "endDate": "12/30/2025 9:00 AM"
+    "endDate": "12/30/2025 9:00 AM",
+    "attendeeCapacity": "10"
   }
 }
