@@ -33,7 +33,10 @@ test.describe("Create Single Event - Training/Events - Full End-to-End Flow", ()
     await expect(createEventPage.saveButton).toBeVisible();
   });
 
-  test("Complete Single Event Creation Flow", async ({ page }) => {
+  test.only("Complete Single Event Creation Flow", async ({
+    page,
+    browser,
+  }) => {
     const createEventPage = new CreateSingleEventPage(page);
 
     const data: SingleEventData = (singleEventData as any).defaultEvent;
@@ -45,6 +48,41 @@ test.describe("Create Single Event - Training/Events - Full End-to-End Flow", ()
     await createEventPage.configureAccessAndContentAreas();
     await createEventPage.fillAttendeeCapacity(data);
     await createEventPage.clickSave();
+    // Verify confirmation page
+    await createEventPage.validateTabTitle(
+      "Training Event Confirmation - Coalition Manager"
+    );
+    await createEventPage.verifyTrainingEventConfirmationPage();
+    // Extract and store event name
+    const createdEventName = await createEventPage.getCreatedEventName();
+    console.log("Created Event Name:", createdEventName);
+    // Navigate to Current Events
+    await createEventPage.goToCurrentEvents();
+    //  Type the name into Title filter and press Enter
+    await createEventPage.filterEventsByTitle(createdEventName);
+    //  Verify event is visible in the grid
+    await createEventPage.verifyEventVisibleInGrid(createdEventName);
+    //Click on copy link button
+    await createEventPage.clickCopyLinkForEvent(createdEventName);
+    // Validate the URL in the button value
+    const copiedUrl = await createEventPage.getCopiedEventUrl(createdEventName);
+    console.log("Copied Event URL:", copiedUrl);
+    expect(copiedUrl).not.toBeNull();
+    expect(copiedUrl).toContain("/trainingevent/details/");
 
+    //  open copied event url in incognito mode and register to the event
+    const incognitoContext = await browser.newContext({
+      storageState: undefined,
+    });
+
+    const incognitoPage = await incognitoContext.newPage();
+    await incognitoPage.goto(copiedUrl!);
+
+    await expect(incognitoPage).toHaveURL(/trainingevent\/details/);
+    await expect(
+      incognitoPage.getByRole("heading", { name: createdEventName })
+    ).toBeVisible();
+    
+    // await incognitoContext.close();
   });
 });

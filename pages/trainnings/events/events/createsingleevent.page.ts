@@ -87,6 +87,23 @@ export class CreateSingleEventPage extends BasePage {
   readonly saveButton: Locator;
   readonly successToast: Locator;
 
+  // TRAINING EVENT CONFIRMATION PAGE
+  readonly trainingEventConfirmationHeader: Locator;
+  readonly successIcon: Locator;
+  readonly trainingEventAddedText: Locator;
+  readonly addNewEventBtn: Locator;
+  readonly duplicateTrainingBtn: Locator;
+  readonly editTrainingBtn: Locator;
+  readonly viewTrainingBtn: Locator;
+  readonly currentEventsBtn: Locator;
+  readonly currentEventsNav: Locator;
+
+  //current event grid to search event and copy its link to register
+  readonly titleFilterInput: Locator;
+  readonly gridRow: Locator;
+readonly copyLinkButton: Locator;
+
+
   constructor(page: Page) {
     super(page);
 
@@ -199,6 +216,33 @@ export class CreateSingleEventPage extends BasePage {
     // Save
     this.saveButton = page.getByRole("button", { name: "Save" });
     this.successToast = page.getByText("Event saved");
+
+    // TRAINING EVENT CONFIRMATION PAGE
+    this.trainingEventConfirmationHeader = page
+      .locator("a")
+      .filter({ hasText: "Training Event Confirmation" });
+
+    this.successIcon = page.locator(".bi.bi-check-circle");
+
+    this.trainingEventAddedText = page.getByText("Training Event added");
+
+    this.addNewEventBtn = page.getByRole("link", { name: "Add New Event" });
+    this.duplicateTrainingBtn = page.getByRole("link", {
+      name: "Duplicate Training",
+    });
+    this.editTrainingBtn = page.getByRole("link", { name: "Edit Training" });
+    this.viewTrainingBtn = page.getByRole("link", { name: "View Training" });
+
+    this.currentEventsBtn = page
+      .locator("#bodyContent")
+      .getByRole("link", { name: "Current Events" });
+    this.currentEventsNav = page.locator("#aCurrentEvent");
+
+    //current event grid to search event and copy its link to register
+    this.titleFilterInput = page.getByRole("combobox", { name: "Title" });
+    this.gridRow = page.locator("tbody > tr.k-master-row");
+    this.copyLinkButton = page.locator("button.copy-link-value[title='Copy Link']");
+
   }
 
   async fillDescription(text: string) {
@@ -360,4 +404,60 @@ export class CreateSingleEventPage extends BasePage {
     await expect(this.saveButton).toBeVisible();
     await this.saveButton.click();
   }
+
+  // ---------- Training Event Confirmation Page ----------
+  async verifyTrainingEventConfirmationPage() {
+    await expect(this.trainingEventConfirmationHeader).toBeVisible();
+    await expect(this.successIcon).toBeVisible();
+    await expect(this.trainingEventAddedText).toBeVisible();
+
+    await expect(this.addNewEventBtn).toBeVisible();
+    await expect(this.duplicateTrainingBtn).toBeVisible();
+    await expect(this.editTrainingBtn).toBeVisible();
+    await expect(this.viewTrainingBtn).toBeVisible();
+    await this.viewTrainingBtn.click();
+  }
+  // Extract name of currently created event
+  async getCreatedEventName(): Promise<string> {
+    const fullTitle = await this.page.title();
+    return fullTitle.split(" - ")[0].trim();
+  }
+
+  //navigate to current events page
+  async goToCurrentEvents() {
+    await this.currentEventsNav.click();
+  }
+
+  // Validate event in grid
+  async filterEventsByTitle(title: string) {
+    await this.page.getByRole("columnheader", { name: "Title" }).waitFor();
+    await this.titleFilterInput.click();
+    await this.titleFilterInput.fill("");       
+    await this.titleFilterInput.fill(title);
+    await this.titleFilterInput.press("Enter");
+    await this.titleFilterInput.click();
+
+  }
+
+  async verifyEventVisibleInGrid(title: string) {
+    const eventLink = this.page.getByRole("link", { name: title });
+    await expect(eventLink).toBeVisible();
+  }
+
+ getCopyLinkButtonForEvent(eventName: string) {
+  return this.gridRow
+    .filter({ has: this.page.getByRole("link", { name: eventName }) })
+    .locator("button.copy-link-value[title='Copy Link']");
+}
+
+async clickCopyLinkForEvent(eventName: string) {
+  const btn = this.getCopyLinkButtonForEvent(eventName);
+  await btn.click();
+}
+
+async getCopiedEventUrl(eventName: string): Promise<string | null> {
+  const btn = this.getCopyLinkButtonForEvent(eventName);
+  return await btn.getAttribute("value");
+}
+
 }
