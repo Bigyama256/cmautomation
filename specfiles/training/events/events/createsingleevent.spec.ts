@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { NewEventPage } from "../../../../pages/trainnings/events/newevent.page";
+
 import {
   CreateSingleEventPage,
   SingleEventData,
@@ -18,7 +19,7 @@ test.describe("Create Single Event - Training/Events - Full End-to-End Flow", ()
     // Navigate to dashboard (already logged-in via storageState)
     await newEventPage.navigate(testInfo.project.use.baseURL!);
 
-    // Open Trainings/Events → New Event → Single Event
+    //  Trainings/Events → New Event → Single Event
     await newEventPage.openNewEventFromSidebar();
     await newEventPage.clickSingleEvent();
   });
@@ -33,10 +34,11 @@ test.describe("Create Single Event - Training/Events - Full End-to-End Flow", ()
     await expect(createEventPage.saveButton).toBeVisible();
   });
 
-  test.only("Complete Single Event Creation Flow", async ({
+  test("Complete Single Event Creation Flow", async ({
     page,
     browser,
   }) => {
+    test.setTimeout(120000);
     const createEventPage = new CreateSingleEventPage(page);
 
     const data: SingleEventData = (singleEventData as any).defaultEvent;
@@ -48,29 +50,31 @@ test.describe("Create Single Event - Training/Events - Full End-to-End Flow", ()
     await createEventPage.configureAccessAndContentAreas();
     await createEventPage.fillAttendeeCapacity(data);
     await createEventPage.clickSave();
-    // Verify confirmation page
+
+    // Confirmation page - verification
     await createEventPage.validateTabTitle(
       "Training Event Confirmation - Coalition Manager"
     );
     await createEventPage.verifyTrainingEventConfirmationPage();
-    // Extract and store event name
+
+    // Extract and store event name to validate in Current Events
     const createdEventName = await createEventPage.getCreatedEventName();
     console.log("Created Event Name:", createdEventName);
-    // Navigate to Current Events
+
+    // Go to Current Events and copy public link of recently created event
     await createEventPage.goToCurrentEvents();
-    //  Type the name into Title filter and press Enter
     await createEventPage.filterEventsByTitle(createdEventName);
-    //  Verify event is visible in the grid
     await createEventPage.verifyEventVisibleInGrid(createdEventName);
-    //Click on copy link button
     await createEventPage.clickCopyLinkForEvent(createdEventName);
+
     // Validate the URL in the button value
     const copiedUrl = await createEventPage.getCopiedEventUrl(createdEventName);
     console.log("Copied Event URL:", copiedUrl);
+
     expect(copiedUrl).not.toBeNull();
     expect(copiedUrl).toContain("/trainingevent/details/");
 
-    //  open copied event url in incognito mode and register to the event
+    //  Open copied event url in incognito mode to register into the event
     const incognitoContext = await browser.newContext({
       storageState: undefined,
     });
@@ -78,11 +82,14 @@ test.describe("Create Single Event - Training/Events - Full End-to-End Flow", ()
     const incognitoPage = await incognitoContext.newPage();
     await incognitoPage.goto(copiedUrl!);
 
-    await expect(incognitoPage).toHaveURL(/trainingevent\/details/);
-    await expect(
-      incognitoPage.getByRole("heading", { name: createdEventName })
-    ).toBeVisible();
-    
-    // await incognitoContext.close();
+    // Using same POM for the public page to register for the event
+    const publicEventPage = new CreateSingleEventPage(incognitoPage);
+
+    await publicEventPage.verifyPublicEventPageOpened(createdEventName);
+
+    //  Faker is used to generate random user data for registration
+    await publicEventPage.registerUsingFaker();
+
+    await incognitoContext.close();
   });
 });
